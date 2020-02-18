@@ -1,4 +1,4 @@
-version: "3.7"
+version: "2.3"
 
 services:
   app:
@@ -61,6 +61,15 @@ services:
         "-c",
         "composer install && cp .env.example .env && php artisan key:generate && php artisan config:cache",
       ]
+
+  migration:
+    image: rafaelrocha007/laravel
+    container_name: migration
+    volumes:
+      - .:/var/www
+    entrypoint: "php artisan migrate"
+    depends_on:
+      - db
 
 networks:
   app-network:
